@@ -10,7 +10,7 @@ export class AppService {
   }
 
   encrypt(object: Record<string, any>): Record<string, string> {
-    let iv = randomBytes(20);
+    let iv = randomBytes(16);
 
     const cipher = createCipheriv("aes-256-gcm", this.key, iv);
 
@@ -27,9 +27,6 @@ export class AppService {
   }
 
   decrypt(iv: string,encryptedData: string, tag: string) {
-    console.log(iv);
-    console.log(encryptedData);
-    console.log(tag);
     const decipher = createDecipheriv("aes-256-gcm", this.key, Buffer.from(iv, "base64"));
 
     decipher.setAuthTag(Buffer.from(tag, "base64"));
